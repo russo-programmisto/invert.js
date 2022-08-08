@@ -18,13 +18,15 @@ export const invertColors = (
         inversionLevel: number
     }
 ) => {
+    const css = getCSS({
+        invertionLevel: settings.inversionLevel
+    });
+    
     const style = document.createElement("style");
     style.type = "text/css";
     style.appendChild(
         document.createTextNode(
-            getCSS({
-                invertionLevel: settings.inversionLevel
-            })
+            css
         )
     );
 

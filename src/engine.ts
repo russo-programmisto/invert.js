@@ -34,7 +34,7 @@ export const invertColorsIfNeeded = (
     }
 
     invertColors({
-        inversionLevel: currentColorScheme === settings.defaultColorScheme ? 0 : 100
+        inversionLevel: currentColorScheme === settings.defaultColorScheme ? 0 : settings.inversionLevel
     });
 }
 
