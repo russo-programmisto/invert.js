@@ -1,21 +1,21 @@
 const getCSS = (
     settings: {
-        invertionPercentage: number
+        invertionLevel: number
     }
 ) => {
     return `
         html {
-            -webkit-filter: invert(${settings.invertionPercentage}%);
-            -moz-filter: invert(${settings.invertionPercentage}%);
-            -o-filter: invert(${settings.invertionPercentage}%);
-            -ms-filter: invert(${settings.invertionPercentage}%);
+            -webkit-filter: invert(${settings.invertionLevel}%);
+            -moz-filter: invert(${settings.invertionLevel}%);
+            -o-filter: invert(${settings.invertionLevel}%);
+            -ms-filter: invert(${settings.invertionLevel}%);
         }
     `;
 }
 
-export const invertColor = (
+export const invertColors = (
     settings: {
-        inversionPercentage: number
+        inversionLevel: number
     }
 ) => {
     const style = document.createElement("style");
@@ -23,7 +23,7 @@ export const invertColor = (
     style.appendChild(
         document.createTextNode(
             getCSS({
-                invertionPercentage: settings.inversionPercentage
+                invertionLevel: settings.inversionLevel
             })
         )
     );

@@ -1,4 +1,1 @@
-export enum ColorScheme {
-    light = "light",
-    dark = "dark"
-}
+export type ColorScheme = "light" | "dark";

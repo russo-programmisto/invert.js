@@ -1,4 +1,4 @@
-import { invertColor } from "./invert-colors";
+import { invertColors } from "./invert-colors";
 import { ColorScheme } from "./color-scheme";
 
 export const getDarkColorSchemeQuery = () => {
@@ -11,19 +11,20 @@ export const getDarkColorSchemeQuery = () => {
     }
 }
 
-export const getColorScheme = () => {
+export const getColorScheme = (): ColorScheme | undefined => {
     const query = getDarkColorSchemeQuery();
 
     if (query) {
-        return query.matches ? ColorScheme.dark : ColorScheme.light;
+        return query.matches ? "dark" : "light";
     } else {
         return undefined;
     }
 }
 
-export const invertColorIfNeeded = (
+export const invertColorsIfNeeded = (
     settings: {
-        defaultColorScheme: ColorScheme
+        defaultColorScheme: ColorScheme,
+        inversionLevel: number
     }
 ) => {
     const currentColorScheme = getColorScheme();
@@ -32,33 +33,28 @@ export const invertColorIfNeeded = (
         return;
     }
 
-    invertColor({
-        inversionPercentage: currentColorScheme === settings.defaultColorScheme ? 0 : 100
+    invertColors({
+        inversionLevel: currentColorScheme === settings.defaultColorScheme ? 0 : 100
     });
 }
 
-export const invertColorIfNeededAndWatchForSchemeChange = (
+export const watchForSchemeChange = (
     settings: {
         defaultColorScheme: ColorScheme,
-        watchForSchemeChange?: boolean
+        inversionLevel: number
     }
 ) => {
-    invertColorIfNeeded({
-        defaultColorScheme: settings.defaultColorScheme
-    });
+    const query = getDarkColorSchemeQuery();
 
-    if (settings.watchForSchemeChange) {
-        const query = getDarkColorSchemeQuery();
-
-        if (query) {
-            query.addEventListener(
-                "change",
-                (event) => {
-                    invertColorIfNeeded({
-                        defaultColorScheme: settings.defaultColorScheme
-                    });
-                }
-            );
-        }
+    if (query) {
+        query.addEventListener(
+            "change",
+            () => {
+                invertColorsIfNeeded({
+                    defaultColorScheme: settings.defaultColorScheme,
+                    inversionLevel: settings.inversionLevel
+                });
+            }
+        );
     }
 }
