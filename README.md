@@ -30,11 +30,17 @@ TypeScript.
 
 ## Usage
 
-Simply call
+Import library:
+
+```typescript
+import { invert } from "@russo-programmisto/invert"
+```
+
+Then simply call:
 
 ```typescript
 invert({
-    defaultColorScheme: ColorScheme.light,
+    defaultColorScheme: "light",
     watchForSchemeChange: true
 })
 ```
