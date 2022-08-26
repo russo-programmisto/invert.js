@@ -1,4 +1,10 @@
-const getCSS = (
+export type InvertCSSBuilderMethod = (
+    settings: {
+        invertionLevel: number
+    }
+) => string
+
+const getCSS: InvertCSSBuilderMethod = (
     settings: {
         invertionLevel: number
     }
@@ -15,10 +21,11 @@ const getCSS = (
 
 export const invertColors = (
     settings: {
-        inversionLevel: number
+        inversionLevel: number,
+        customizeCSS?: InvertCSSBuilderMethod
     }
 ) => {
-    const css = getCSS({
+    const css =(settings.customizeCSS ?? getCSS)({
         invertionLevel: settings.inversionLevel
     });
     

@@ -1,4 +1,4 @@
-import { invertColors } from "./invert-colors";
+import { invertColors, InvertCSSBuilderMethod } from "./invert-colors";
 import { ColorScheme } from "./color-scheme";
 
 export const getDarkColorSchemeQuery = () => {
@@ -24,7 +24,8 @@ export const getColorScheme = (): ColorScheme | undefined => {
 export const invertColorsIfNeeded = (
     settings: {
         defaultColorScheme: ColorScheme,
-        inversionLevel: number
+        inversionLevel: number,
+        customizeCSS?: InvertCSSBuilderMethod
     }
 ) => {
     const currentColorScheme = getColorScheme();
@@ -34,14 +35,16 @@ export const invertColorsIfNeeded = (
     }
 
     invertColors({
-        inversionLevel: currentColorScheme === settings.defaultColorScheme ? 0 : settings.inversionLevel
+        inversionLevel: currentColorScheme === settings.defaultColorScheme ? 0 : settings.inversionLevel,
+        customizeCSS: settings.customizeCSS
     });
 }
 
 export const watchForSchemeChange = (
     settings: {
         defaultColorScheme: ColorScheme,
-        inversionLevel: number
+        inversionLevel: number,
+        customizeCSS?: InvertCSSBuilderMethod
     }
 ) => {
     const query = getDarkColorSchemeQuery();
@@ -52,7 +55,8 @@ export const watchForSchemeChange = (
             () => {
                 invertColorsIfNeeded({
                     defaultColorScheme: settings.defaultColorScheme,
-                    inversionLevel: settings.inversionLevel
+                    inversionLevel: settings.inversionLevel,
+                    customizeCSS: settings.customizeCSS
                 });
             }
         );
